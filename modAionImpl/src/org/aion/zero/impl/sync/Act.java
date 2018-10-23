@@ -55,4 +55,6 @@ public final class Act {
     public static final byte BROADCAST_BLOCK = 7;
 
     public static final byte REQUEST_TRIE_STATE = 10;
+
+    public static final byte RESPONSE_TRIE_STATE = 11;
 }
