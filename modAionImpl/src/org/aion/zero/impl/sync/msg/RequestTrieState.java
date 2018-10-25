@@ -46,7 +46,7 @@ public final class RequestTrieState extends Msg {
      * @param type the blockchain database in which the key should be found
      */
     public RequestTrieState(byte[] hash, TrieDatabase type) {
-        super(Ver.V0, Ctrl.SYNC, Act.REQUEST_TRIE_STATE);
+        super(Ver.V1, Ctrl.SYNC, Act.REQUEST_TRIE_STATE);
         this.hash = hash;
         this.type = type;
     }

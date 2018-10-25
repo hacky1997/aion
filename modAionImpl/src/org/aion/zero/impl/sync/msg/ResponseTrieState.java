@@ -47,7 +47,7 @@ public final class ResponseTrieState extends Msg {
     private final byte[] value; // TODO: min/max bytes
 
     public ResponseTrieState(final byte[] hash, final byte[] value, final TrieDatabase type) {
-        super(Ver.V0, Ctrl.SYNC, Act.RESPONSE_TRIE_STATE);
+        super(Ver.V1, Ctrl.SYNC, Act.RESPONSE_TRIE_STATE);
         this.hash = hash;
         this.value = value;
         this.type = type;
