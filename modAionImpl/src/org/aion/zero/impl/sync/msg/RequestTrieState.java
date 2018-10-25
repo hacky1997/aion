@@ -79,4 +79,12 @@ public final class RequestTrieState extends Msg {
     public byte[] encode() {
         return RLP.encodeList(RLP.encodeString(type.toString()), RLP.encodeElement(hash));
     }
+
+    public TrieDatabase getType() {
+        return type;
+    }
+
+    public byte[] getHash() {
+        return hash;
+    }
 }
