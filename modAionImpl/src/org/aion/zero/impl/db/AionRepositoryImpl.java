@@ -34,6 +34,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import org.aion.base.db.IByteArrayKeyValueDatabase;
 import org.aion.base.db.IContractDetails;
@@ -788,6 +789,57 @@ public class AionRepositoryImpl
             }
         } finally {
             rwLock.writeLock().unlock();
+        }
+    }
+
+    /**
+     * Retrieves the value for the given trie node from the state database.
+     *
+     * @param key the hash key of the node to be retrieved
+     * @return the {@code byte} array value associated with the given key or {@code null} when the
+     *     key cannot be found in the database.
+     * @throws IllegalArgumentException if the given key is null
+     */
+    public byte[] getStateTrieValue(byte[] key) {
+        Optional<byte[]> value = stateDatabase.get(key);
+        if (value.isPresent()) {
+            return value.get();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Retrieves the value for the given trie node from the details database.
+     *
+     * @param key the hash key of the node to be retrieved
+     * @return the {@code byte} array value associated with the given key or {@code null} when the
+     *     key cannot be found in the database.
+     * @throws IllegalArgumentException if the given key is null
+     */
+    public byte[] getDetailsTrieValue(byte[] key) {
+        Optional<byte[]> value = detailsDatabase.get(key);
+        if (value.isPresent()) {
+            return value.get();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Retrieves the value for the given trie node from the storage database.
+     *
+     * @param key the hash key of the node to be retrieved
+     * @return the {@code byte} array value associated with the given key or {@code null} when the
+     *     key cannot be found in the database.
+     * @throws IllegalArgumentException if the given key is null
+     */
+    public byte[] getStorageTrieValue(byte[] key) {
+        Optional<byte[]> value = storageDatabase.get(key);
+        if (value.isPresent()) {
+            return value.get();
+        } else {
+            return null;
         }
     }
 }

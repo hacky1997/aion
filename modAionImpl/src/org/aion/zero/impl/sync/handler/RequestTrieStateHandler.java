@@ -62,29 +62,26 @@ public final class RequestTrieStateHandler extends Handler {
         RequestTrieState request = RequestTrieState.decode(_msgBytes);
 
         if (request != null) {
-            TrieDatabase db = request.getType();
+            TrieDatabase dbType = request.getType();
             byte[] key = request.getHash();
 
             if (log.isDebugEnabled()) {
                 this.log.debug(
                         "<req-trie from-db={} hash={} node={}>",
-                        db,
+                        dbType,
                         ByteArrayWrapper.wrap(key),
                         _displayId);
             }
 
-            // TODO: retrieve from blockchain depending on db
-            byte[] value = null;
-            switch (db) {
-                case STATE:
-                    break;
-                case DETAILS:
-                    break;
-                case STORAGE:
-                    break;
-            }
+            if (key != null) {
+                // retrieve from blockchain depending on db type
+                byte[] value = chain.getTrieNode(key, dbType);
 
-            this.mgr.send(_nodeIdHashcode, _displayId, new ResponseTrieState(key, value, db));
+                if (value != null) {
+                    this.mgr.send(
+                            _nodeIdHashcode, _displayId, new ResponseTrieState(key, value, dbType));
+                }
+            }
         } else {
             this.log.error(
                     "<req-trie decode-error msg-bytes={} node={}>",
